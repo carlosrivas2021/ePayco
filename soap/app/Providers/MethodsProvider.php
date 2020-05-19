@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright (C) 2013-2019
  * Piotr Olaszewski <piotroo89@gmail.com>
@@ -21,6 +22,9 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
+
+namespace App\Providers;
+
 use WSDL\Builder\Method;
 use WSDL\Builder\Parameter;
 use WSDL\Lexer\Tokenizer;
@@ -43,41 +47,59 @@ class MethodsProvider
         $parameters1 = [Parameter::fromTokens($tokenizer->lex('string $userName'))];
         $return1 = Parameter::fromTokens($tokenizer->lex('string $uppercasedUserName'));
 
-        $parameters2 = [
-            Parameter::fromTokens($tokenizer->lex('int[] $numbers')),
-            Parameter::fromTokens($tokenizer->lex('string $prefix'))
+        $parameters2 = [Parameter::fromTokens($tokenizer->lex('string $userName'))];
+        $return2 = Parameter::fromTokens($tokenizer->lex('string $getStudentName'));
+
+        $parameters3 = [
+            Parameter::fromTokens($tokenizer->lex('string $name')),
+            Parameter::fromTokens($tokenizer->lex('string $dni')),
+            Parameter::fromTokens($tokenizer->lex('string $email')),
+            Parameter::fromTokens($tokenizer->lex('string $phone'))
         ];
-        $return2 = Parameter::fromTokens($tokenizer->lex('string[] $numbersWithPrefix'));
+        $return3 = Parameter::fromTokens($tokenizer->lex('string $registroCliente'));
 
-        $parameters3 = [Parameter::fromTokens($tokenizer->lex('object $user { string $name int $age }'))];
-        $return3 = Parameter::fromTokens($tokenizer->lex('object $userContext { int $id object $userInfo { string $name int $age } }'));
+        $parameters4 = [
+            Parameter::fromTokens($tokenizer->lex('string $dni')),
+            Parameter::fromTokens($tokenizer->lex('string $phone')),
+            Parameter::fromTokens($tokenizer->lex('float $amount'))
+        ];
+        $return4 = Parameter::fromTokens($tokenizer->lex('string $rechargeWallet'));
 
-        $parameters4 = [Parameter::fromTokens($tokenizer->lex('object[] $companies { string $name int $postcode }'))];
-        $return4 = Parameter::fromTokens($tokenizer->lex('string[] $companiesNames'));
-
-        $parameters5 = [Parameter::fromTokens($tokenizer->lex('string[] $errors'))];
-        $return5 = Parameter::fromTokens($tokenizer->lex('object $result { boolean $result string[] $errors }'));
+        $parameters5 = [
+            Parameter::fromTokens($tokenizer->lex('string $dni')),
+            Parameter::fromTokens($tokenizer->lex('string $phone'))
+        ];
+        $return5 = Parameter::fromTokens($tokenizer->lex('string $checkBalance'));
 
         $parameters6 = [
-            Parameter::fromTokens($tokenizer->lex('object $serviceAuth { string $token int $id }'), true),
-            Parameter::fromTokens($tokenizer->lex('string $name')),
-            Parameter::fromTokens($tokenizer->lex('string $surname'))
+            Parameter::fromTokens($tokenizer->lex('string $dni')),
+            Parameter::fromTokens($tokenizer->lex('string $phone')),
+            Parameter::fromTokens($tokenizer->lex('float $amount'))
+
         ];
-        $return6 = Parameter::fromTokens($tokenizer->lex('string $nameWithSurname'));
+        $return6 = Parameter::fromTokens($tokenizer->lex('string $generateToken'));
 
-        $parameters7 = [Parameter::fromTokens($tokenizer->lex('string $userToken'))];
+        $parameters7 = [
+            Parameter::fromTokens($tokenizer->lex('string $id')),
+            Parameter::fromTokens($tokenizer->lex('string $token'))
 
-        $return8 = Parameter::fromTokens($tokenizer->lex('string $responseForMethodWithoutParameters'));
+        ];
+        $return7 = Parameter::fromTokens($tokenizer->lex('string $generateToken'));
+        // $parameters2 = [
+        //     Parameter::fromTokens($tokenizer->lex('int[] $numbers')),
+        //     Parameter::fromTokens($tokenizer->lex('string $prefix'))
+        // ];
+        // $return2 = Parameter::fromTokens($tokenizer->lex('string[] $numbersWithPrefix'));
+
 
         return [
             new Method('uppercaseUserName', $parameters1, $return1),
-            new Method('appendPrefixToNumbers', $parameters2, $return2),
-            new Method('getUserContext', $parameters3, $return3),
-            new Method('extractCompaniesNames', $parameters4, $return4),
-            new Method('wrapErrors', $parameters5, $return5),
-            new Method('authorizedMethod', $parameters6, $return6),
-            new Method('methodWithoutReturn', $parameters7, null),
-            new Method('methodWithoutParameters', [], $return8)
+            new Method('getStudentName', $parameters2, $return2),
+            new Method('registroCliente', $parameters3, $return3),
+            new Method('rechargeWallet', $parameters4, $return4),
+            new Method('checkBalance', $parameters5, $return5),
+            new Method('generateToken', $parameters6, $return6),
+            new Method('confirmPayment', $parameters7, $return7)
         ];
     }
 }

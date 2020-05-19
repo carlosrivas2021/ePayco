@@ -12,7 +12,20 @@ use Illuminate\Support\Facades\Validator;
 
 class ServiceController extends Controller
 {
-    public function getStudentName($id_array)
+
+    public function uppercaseUserName($userName)
+    {
+        $data = [
+            'status' => 'success',
+            'data' => [
+                'first_name' => 'John',
+                'last_name' => 'Smith',
+            ]
+        ];
+        return response()->xml($data);
+        return response()->xml(['status' => 'success', 'value' => ['id' => $userName, 'name' => 'Sam']], 200);
+    }
+    public function getStudentName($userName)
     {
         $data = [
             'status' => 'success',
@@ -22,12 +35,12 @@ class ServiceController extends Controller
             ]
         ];
         // return response()->xml($data);
-        return response()->xml(['status' => 'success', 'value' => ['id' => $id_array, 'name' => 'Sam']], 400);
+        return response()->xml(['status' => 'success', 'value' => ['id' => $userName, 'name' => 'Sam']], 200);
     }
 
-    public function registroCliente($cliente, $dni, $email, $phone)
+    public function registroCliente($name, $dni, $email, $phone)
     {
-        $array = ['name' => $cliente, 'dni' => $dni, 'email' => $email, 'phone' => $phone];
+        $array = ['name' => $name, 'dni' => $dni, 'email' => $email, 'phone' => $phone];
 
         $validator = Validator::make($array, [
             "name" => "required|alpha",
@@ -40,7 +53,7 @@ class ServiceController extends Controller
         if ($validator->fails()) {
             $errors = $validator->errors();
 
-            return response()->xml(['status' => 'error', 'value' => $errors->all()], 406);
+            return response()->xml(['status' => 'error', 'value' => $errors->all()], 422);
         }
 
         $user = User::create($array);
