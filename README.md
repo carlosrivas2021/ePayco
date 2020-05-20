@@ -15,9 +15,10 @@ La conexión a la base de dato se configura en el archivo .env de  dentro del di
 Entrar en el directorio soap y ejecutar 
 ```
 composer install
+php artisan key:generate
 php artisan migrate
 ```
-Para ajustar el api a cual url debe apuntar debe configurarse el archivo .env dentro de rest, de igual forma puede cambiarse el puerto
+Para ajustar el api a cual url debe apuntar debe configurarse el archivo .env dentro de api, de igual forma puede cambiarse el puerto
 
 Entrar en el directorio rest y ejecutar 
 ```
