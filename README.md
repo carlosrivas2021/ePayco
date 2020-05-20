@@ -27,6 +27,8 @@ npm install
 
 ## Ejecutando las pruebas ⚙️
 
+El directorio client tiene un pequeño cliente para probar los endpoints, estos estan apuntando a la url http://localhost:3000/api/ por lo tanto si no se modifica el puerto del api, funcionaria sin ningún cambio.
+
 Entrar en el directorio rest y ejecutar 
 ```
 npm start
