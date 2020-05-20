@@ -11,6 +11,7 @@
     <p>
         Nombre: {{ $data->name }} <br>
         email: {{ $data->email }} <br>
+        Id de Sesión: {{ $data->session_id }} <br>
         Token: {{ $data->token }} <br>
     </p>
 </body>

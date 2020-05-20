@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Confirmar pago</title>
+    <link rel="stylesheet" href="assets/style.css" />
+  </head>
+  <body>
+    <div class="container2">
+      <h1>Confirmar pago</h1>
+      <div>
+        <label for="id">
+          Id
+          <input type="text" id="id" />
+        </label>
+        <label for="token">
+          Token
+          <input type="text" id="token" />
+        </label>
+      </div>
+      <div>
+        <button onclick="enviar()">Guardar</button>
+      </div>
+      <div id="result"></div>
+    </div>
+
+    <script>
+      function enviar() {
+        var details = {
+          id: document.getElementById('id').value,
+          token: document.getElementById('token').value
+        };
+
+        var formBody = [];
+        for (var property in details) {
+          var encodedKey = encodeURIComponent(property);
+          var encodedValue = encodeURIComponent(details[property]);
+          formBody.push(encodedKey + '=' + encodedValue);
+        }
+        formBody = formBody.join('&');
+
+        fetch('http://localhost:3000/api/confirmpayment', {
+          method: 'POST', // or 'PUT'
+          body: formBody, // data can be `string` or {object}!
+          headers: {
+            'Content-Type': 'application/x-www-form-urlencoded'
+          }
+        })
+          .then(res => res.json())
+          .catch(error => {
+            console.error('Error:', error);
+          })
+          .then(response => {
+            console.log('Response:', response);
+            if (response.status === 'error') {
+              document.getElementById('result').innerHTML = response.value;
+            } else {
+              document.getElementById('result').innerHTML = response.status;
+            }
+          });
+      }
+    </script>
+  </body>
+</html>

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Registrar cliente</title>
+    <link rel="stylesheet" href="assets/style.css" />
+  </head>
+  <body>
+    <div class="container2">
+      <h1>Registrar cliente</h1>
+
+      <div>
+        <label for="name">
+          Nombre
+          <input type="text" id="name" />
+        </label>
+        <label for="dni">
+          Identificación
+          <input type="text" id="dni" />
+        </label>
+        <label for="email">
+          Email
+          <input type="text" id="email" />
+        </label>
+        <label for="phone">
+          Teléfono
+          <input type="text" id="phone" />
+        </label>
+      </div>
+      <div>
+        <button onclick="enviar()">Guardar</button>
+      </div>
+      <div id="result"></div>
+    </div>
+
+    <script>
+      function enviar() {
+        var details = {
+          name: document.getElementById('name').value,
+          dni: document.getElementById('dni').value,
+          email: document.getElementById('email').value,
+          phone: document.getElementById('phone').value
+        };
+
+        var formBody = [];
+        for (var property in details) {
+          var encodedKey = encodeURIComponent(property);
+          var encodedValue = encodeURIComponent(details[property]);
+          formBody.push(encodedKey + '=' + encodedValue);
+        }
+        formBody = formBody.join('&');
+
+        fetch('http://localhost:3000/api/registrocliente', {
+          method: 'POST', // or 'PUT'
+          body: formBody, // data can be `string` or {object}!
+          headers: {
+            'Content-Type': 'application/x-www-form-urlencoded'
+          }
+        })
+          .then(res => res.json())
+          .catch(error => {
+            console.error('Error:', error);
+          })
+          .then(response => {
+            console.log('Response:', response);
+            document.getElementById('result').innerHTML = response.value;
+          });
+      }
+    </script>
+  </body>
+</html>

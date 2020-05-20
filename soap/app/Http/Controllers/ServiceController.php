@@ -156,6 +156,8 @@ class ServiceController extends Controller
             'user_id' => $user->id
         ]);
 
+        $user->session_id = $token->id;
+
         if (!$token) {
             return response()->xml(['status' => 'error', 'value' => 'Solicite el token nuevamente'], 406);
         }
